@@ -1,16 +1,20 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm navigation-clean-button">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
+        <div>
+            <img class="navbar-brand" src="storage/img/logo.png"/>
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-
+            <ul class="navbar-nav ml-auto">
+                <li role="presentation" class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li role="presentation" class="nav-item"><a class="nav-link" href="/articles">Articles</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -22,7 +26,7 @@
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a role="button" class="nav-link btn btn-light action-button" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
                 @else

@@ -10965,6 +10965,147 @@ img.navbar-brand {
   text-decoration: none;
 }
 
+.article-clean {
+  color: #56585b;
+  background-color: transparent;
+  font-family: dinpro;
+  font-size: 14px;
+}
+
+.article-clean .intro {
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+.article-clean .intro h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  padding-top: 20px;
+  line-height: 1.5;
+  color: inherit;
+  margin-top: 20px;
+}
+
+.article-clean .intro p {
+  color: #929292;
+  font-size: 12px;
+}
+
+.article-clean .intro p .by {
+  font-style: italic;
+}
+
+.article-clean .intro p .date {
+  text-transform: uppercase;
+  padding: 4px 0 4px 10px;
+  margin-left: 10px;
+  border-left: 1px solid #ddd;
+}
+
+.article-clean .intro p a {
+  color: #333;
+  text-transform: uppercase;
+  padding-left: 3px;
+}
+
+.article-clean .intro img {
+  display: block;
+  width: 70%;
+  margin: 20px auto 0px auto;
+  box-shadow: 3px 3px 20px 0px lightgray, -3px -3px 20px 0px lightgray;
+}
+
+.article-clean .text p {
+  margin-bottom: 20px;
+  line-height: 1.45;
+}
+
+@media (min-width: 768px) {
+  .article-clean .text p {
+    font-size: 16px;
+  }
+}
+
+.article-clean .text h2 {
+  margin-top: 28px;
+  margin-bottom: 20px;
+  line-height: 1.45;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .article-clean .text h2 {
+    font-size: 20px;
+  }
+}
+
+.btn-group {
+  display: block;
+  width: 100%;
+}
+
+.btn-group .btn {
+  width: 100%;
+  background: transparent;
+  color: #303030;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  border: 2px solid #303030;
+  padding: 9px 0px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 150px gray;
+  box-shadow: 2px 2px 10px 0px gray;
+  margin-bottom: 15px;
+}
+
+.btn-group button.btn:hover {
+  background-color: gray;
+  color: white;
+}
+
+.article-clean a {
+  color: #303030;
+}
+
+.articles_home .feature {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+
+.articles_home h2 {
+  font-family: quicksand;
+}
+
+.articles_home .row {
+  height: 220px;
+  border-top: 2px solid lightgray;
+  box-shadow: 3px 3px 30px 0px #dfdfdf;
+}
+
+.articles_home .row:first-child {
+  border: none;
+}
+
+.articles_home .author {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: dimgray;
+  font-weight: bold;
+}
+
+.articles_home .date {
+  font-weight: bold;
+}
+
+.articles_home .row p {
+  font-size: 14px;
+}
+
 a {
   text-decoration: none !important;
 }

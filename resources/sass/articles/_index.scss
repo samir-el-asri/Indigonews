@@ -1,0 +1,35 @@
+.articles_home .feature {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+
+.articles_home h2 {
+    font-family: quicksand;
+}
+
+.articles_home .row {
+    height: 220px;
+    border-top: 2px solid lightgray;
+    box-shadow: 3px 3px 30px 0px rgb(223, 223, 223);
+}
+
+.articles_home .row:first-child {
+    border: none;
+}
+
+.articles_home .author {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: dimgray;
+    font-weight: bold;
+}
+
+.articles_home .date {
+    font-weight: bold;
+}
+
+.articles_home .row p {
+    font-size: 14px;
+}

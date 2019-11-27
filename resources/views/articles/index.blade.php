@@ -2,15 +2,17 @@
 
 @section('content')
     @if (count($articles) > 0)
-        @foreach ($articles as $article)
-            <div class="list-group-item mb-3">
-                <img class="w-25" src="/storage/features/{{$article->feature}}">
-                <a href="/articles/{{$article->id}}"><h2>{{$article->title}}</h2></a>
-                <span>written by <b>{{$article->user->username}}</b> on <b><i>{{$article->created_at}}</i></b></span>
-                <br>
-                <span>category: <b><a href="/categories/{{$article->category_id}}">{{$article->category->name}}</a></b></span>
-            </div>
-        @endforeach
+        <div class="container articles_home">
+            @foreach ($articles as $article)
+                <div class="row">
+                    <div class="col-md-6" style="padding: 20px;">
+                        <h2>{{$article->title}}</h2>
+                        <p><em>Written by </em><span class="author">{{$article->user->username}}</span> on <span class="date"><em>{{$article->created_at}}</em></span></p>
+                        <p>Category: <a href="/categories/{{$article->category_id}}" style="color: dimgray;">comics</a></p><a href="/articles/{{$article->id}}" style="color: rgb(38,17,82);font-weight: bold;">Read more...</a></div>
+                    <div class="col-md-6 feature" style="background-image: url('/storage/features/{{$article->feature}}'); border-left: 1.5px solid lightgray;"></div>
+                </div>
+            @endforeach
+        </div>
     @else
         <h3>No articles found!</h3>
     @endif

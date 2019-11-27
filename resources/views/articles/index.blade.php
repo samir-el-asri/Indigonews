@@ -7,6 +7,8 @@
                 <img class="w-25" src="/storage/features/{{$article->feature}}">
                 <a href="/articles/{{$article->id}}"><h2>{{$article->title}}</h2></a>
                 <span>written by <b>{{$article->user->username}}</b> on <b><i>{{$article->created_at}}</i></b></span>
+                <br>
+                <span>category: <b><a href="/categories/{{$article->category_id}}">{{$article->category->name}}</a></b></span>
             </div>
         @endforeach
     @else

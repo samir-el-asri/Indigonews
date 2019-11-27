@@ -19,6 +19,8 @@
         <img class="w-25" src="/storage/features/{{$article->feature}}">
         <h2>{{$article->title}}</h2>
         <span>written by <b>{{$article->user->username}}</b> on <b><i>{{$article->created_at}}</i></b></span>
+        <br>
+        <span>category: <b><a href="/categories/{{$article->category_id}}">{{$article->category->name}}</a></b></span>
         <hr>
         <p>{!!$article->content!!}</p>
     </div>

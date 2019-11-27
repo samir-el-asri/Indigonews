@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light shadow-sm navigation-clean-button">
     <div class="container">
         <div>
-            <img class="navbar-brand" src="storage/img/logo.png"/>
+            <img class="navbar-brand" src="/storage/img/logo.png"/>
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
@@ -52,3 +52,15 @@
         </div>
     </div>
 </nav>
+
+<div class="container category_container">
+    <div class="row">
+        <div class="col"><a href="/categories/2">Fashion</a></div>
+        <div class="col"><a href="/categories/3">Science</a></div>
+        <div class="col"><a href="/categories/4">Entertainment</a></div>
+        <div class="col"><a href="/categories/5">Movies</a></div>
+        <div class="col"><a href="/categories/6">Comics</a></div>
+        <div class="col"><a href="/categories/7">Tech</a></div>
+        <div class="col"><a href="/categories/8">Politics</a></div>
+    </div>
+</div>

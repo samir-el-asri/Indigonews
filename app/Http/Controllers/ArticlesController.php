@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +31,8 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view("articles.create");
+        $categories = Category::all();
+        return view("articles.create", compact("categories"));
     }
 
     /**
@@ -43,6 +45,7 @@ class ArticlesController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
+            'category_id' => 'required',
             'content' => 'required',
             'feature' => 'nullable|image|max:5999'
         ]);
@@ -61,6 +64,7 @@ class ArticlesController extends Controller
         $article = new Article;
         $article->user_id = auth()->user()->id;
         $article->title = $request->input("title");
+        $article->category_id = $request->input("category_id");
         $article->content = $request->input("content");
         $article->feature = $filenameToStore;
         $article->save();
@@ -89,9 +93,10 @@ class ArticlesController extends Controller
     public function edit(Article $article)
     {
         $article = Article::find($article->id);
+        $categories = Category::all();
         if(auth()->user()->id != $article->user_id)
             return redirect('/articles/'.$article->id)->with("error", "You cannot access this page!");
-        return view("articles.edit", compact("article"));
+        return view("articles.edit", compact("article", "categories"));
     }
 
     /**
@@ -121,6 +126,7 @@ class ArticlesController extends Controller
         $article = Article::find($article->id);
         //$article->user_id = auth()->user()->id;
         $article->title = $request->input("title");
+        $article->category_id = $request->input("category_id");
         $article->content = $request->input("content");
         if($request->hasFile("feature"))
         {

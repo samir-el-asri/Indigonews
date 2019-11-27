@@ -10,7 +10,7 @@
             <h2 class="text-center"><strong>Create</strong> an account.</h2>
             <div class="form-group">
 				<label for="username">{{ __('Username:') }}</label>
-				<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="username">
+				<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autocomplete="username" autofocus placeholder="username">
 
 				@error('username')
 					<span class="invalid-feedback" role="alert">
@@ -20,7 +20,7 @@
 			</div>
             <div class="form-group">
 				<label for="email">{{ __('Email:') }}</label>
-				<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
+				<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="email">
 
 				@error('email')
 					<span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
 			</div>
             <div class="form-group">
 				<label for="password">{{ __('Password:') }}</label>
-				<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="password">
+				<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="password">
 
 				@error('password')
 					<span class="invalid-feedback" role="alert">
@@ -40,7 +40,7 @@
 			</div>
             <div class="form-group">
 				<label for="password-confirmation">{{ __('Password (repeat):') }}</label>
-				<input id="password-confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="password (repeat)">
+				<input id="password-confirmation" type="password" class="form-control" name="password_confirmation" autocomplete="new-password" placeholder="password (repeat)">
 			</div>
             <div class="form-group">
                 <div class="form-check">

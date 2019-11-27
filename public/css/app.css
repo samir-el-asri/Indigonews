@@ -10660,7 +10660,7 @@ a.text-dark:focus {
 }
 
 .navigation-clean-button {
-  background: transparent;
+  background: whitesmoke;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   color: #333;
@@ -10784,6 +10784,31 @@ img.navbar-brand {
   width: 10%;
   vertical-align: top;
   margin-right: 8px;
+}
+
+.category_container a {
+  color: black;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+
+.category_container .col {
+  text-align: center;
+  height: 45px;
+  border-right: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  padding-top: 9px;
+}
+
+.category_container .col:hover {
+  background-color: lightgray;
+}
+
+.container.category_container {
+  max-width: 100%;
+  background-color: whitesmoke;
 }
 
 .login-clean {

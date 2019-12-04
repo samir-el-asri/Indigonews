@@ -130,7 +130,8 @@ class ArticlesController extends Controller
         $article->content = $request->input("content");
         if($request->hasFile("feature"))
         {
-            Storage::delete("public/features/".$article->feature);
+            if($article->feature != "noimage.jpg")
+                Storage::delete("public/features/".$article->feature);
             $article->feature = $filenameToStore;
         }
         $article->save();

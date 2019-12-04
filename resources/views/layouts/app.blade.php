@@ -21,13 +21,19 @@
 </head>
 <body>
     @include('inc.navbar')
-    <div class="container mt-4 mb-4">
+    <div class="container mt-4 mb-4 ml-auto">
         @include('inc.messages')
         @yield('content')
     </div>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'article-ckeditor' );
+    </script>
+    {{-- Script for confirmation dialog box before account delete --}}
+    <script>
+        $(".delete-account").on("submit", function(){
+            return confirm("Are you sure?", "Delete account permanently");
+        });
     </script>
 </body>
 </html>

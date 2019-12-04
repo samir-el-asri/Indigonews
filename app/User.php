@@ -36,9 +36,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    // Assigning a default profile at user creation
+
+    protected static function boot(){
+        parent::boot();
+        static::created(function($user){
+            $user->profile()->create([
+                'fullname' => 'John Doe',
+                'gender' => 'male',
+                'birthday' => '2000-01-01',
+                'bio' => 'empty',
+                'profile_image' => 'noimage.jpg'
+            ]);
+            $user->save();
+        });
+    }
 
     public function articles()
     {
         return $this->hasMany('App\Article');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
     }
 }

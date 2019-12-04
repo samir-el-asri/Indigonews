@@ -9,7 +9,7 @@
                         <h1 class="text-center">{{$article->title}}</h1>
                         <p class="text-center">
                         <span class="by">by&nbsp;</span>
-                        <a href="#">{{$article->user->username}}</a>
+                        <a href="/profiles/{{$article->user->profile->id}}">{{$article->user->profile->fullname}}</a>
                         <span class="date">{{$article->created_at}} </span>
                         </p>
                         <img src="/storage/features/{{$article->feature}}" />

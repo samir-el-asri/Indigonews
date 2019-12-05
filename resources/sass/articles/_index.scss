@@ -10,7 +10,6 @@
 }
 
 .articles_home .row {
-    height: 220px;
     border-top: 2px solid lightgray;
     box-shadow: 3px 3px 30px 0px rgb(223, 223, 223);
 }
@@ -19,7 +18,7 @@
     border: none;
 }
 
-.articles_home .author {
+.articles_home a.author {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: dimgray;

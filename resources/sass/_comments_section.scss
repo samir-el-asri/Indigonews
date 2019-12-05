@@ -1,0 +1,53 @@
+.comments-section .comment-user-photo {
+    width: 57px;
+    height: 57px;
+    margin: 10px auto;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 2px solid lightgray;
+    box-shadow: 2px 2px 20px 0px lightgray;
+}
+
+.comments-section .comments-row {
+    border: 1px solid lightgray;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    box-shadow: 2px 2px 40px 0px rgb(224, 224, 224);
+}
+
+.comments-section .comments-row .username-and-date {
+    color: rgb(135, 135, 135);
+}
+
+.comments-section .comments-row .comment {
+    padding-top: 20px;
+}
+
+.comments-section .comment-row form {
+    margin-bottom: 20px;
+}
+
+.comments-section .comments-row form {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.comments-section .comments-row form button[type='submit'] {
+    border: none;
+    background-color: transparent;
+}
+
+.comments-section input[type='text'] {
+    padding: 15px;
+    height: 40px;
+    border: 1px solid lightgray;
+    border-radius: 50px;
+}
+
+.comments-section input[type='submit'] {
+    border-radius: 50px;
+}

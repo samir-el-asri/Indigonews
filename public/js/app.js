@@ -49197,6 +49197,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./complete_registration */ "./resources/js/complete_registration.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -49276,6 +49278,38 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/complete_registration.js":
+/*!***********************************************!*\
+  !*** ./resources/js/complete_registration.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(".form-element").on("keypress, change", function () {
+  var formElementArray = $(".form-element");
+  var listElementArray = $(".list-element");
+  var cpt = 0;
+
+  for (var i = 0; i < $(formElementArray).length; i++) {
+    $(listElementArray[i]).removeClass("active");
+
+    if ($(formElementArray[i]).val() != "" || $(formElementArray[i]).attr("file") != null) {
+      $(listElementArray[i]).addClass("active");
+      cpt++;
+    }
+  }
+
+  if (cpt == 5) {
+    //$("form").css("height", "300px");
+    $("button[type='submit']").removeAttr("hidden");
+  } else {
+    //$("form").css("height", "240px");
+    $("button[type='submit']").attr("hidden", "hidden");
+  }
+});
 
 /***/ }),
 

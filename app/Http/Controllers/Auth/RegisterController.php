@@ -27,7 +27,7 @@ class RegisterController extends Controller
     // Redirect users to the 'complete/edit your profile' page
     private function redirectTo(){
         $id = Auth::user()->profile->id;
-        return "/profiles/$id/edit";
+        return "profiles/{$id}/complete_registration";
     }
 
     /**

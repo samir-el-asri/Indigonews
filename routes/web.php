@@ -21,3 +21,8 @@ Route::resource('articles', 'ArticlesController');
 Route::resource('categories', 'CategoriesController');
 Route::resource('profiles', 'ProfilesController');
 Route::resource('comments', 'CommentsController');
+
+// Complete Profile Registration Page
+Route::get('profiles/{profile}/complete_registration', function (App\Profile $profile) {
+    return view('profiles.complete_registration', compact("profile"));
+});

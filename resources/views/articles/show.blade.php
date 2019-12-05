@@ -64,11 +64,15 @@
                                     <div class="col">
                                         <p class="comment w-100 text-left">{!! $comment->comment !!}</p>
                                         <p class="username-and-date w-100 text-right">{{ floor((abs(strtotime(date("Y-m-d")) - strtotime($comment->created_at))/(60*60*24))) + 1 }} days ago</p>
-                                        <form action="/comments/{{$comment->id}}" method="post">
-                                            <input hidden name="_token" value="{{ csrf_token() }}">
-                                            <input hidden name="_method" value="delete">
-                                            <button class="text-danger text-right" type="submit">delete</button>
-                                        </form>
+                                        @if (!Auth::guest())
+                                            @if (Auth::user()->id == $comment->user_id)
+                                                <form action="/comments/{{$comment->id}}" method="post">
+                                                    <input hidden name="_token" value="{{ csrf_token() }}">
+                                                    <input hidden name="_method" value="delete">
+                                                    <button class="text-danger text-right" type="submit">delete</button>
+                                                </form>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach

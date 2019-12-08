@@ -10,10 +10,34 @@
                 <p class="username">{{$profile->user->username}}</p>
                 <p class="bio">{{$profile->bio}}</p>
             </div>
+            @if (!Auth::guest())
+                @if (Auth::user()->id != $profile->user_id)
+                    <div class="col-md-4 col-lg-6 mx-auto text-center">
+                        <form method="POST" action="/conversations">
+                            <input hidden name="_token" value="{{ csrf_token() }}">
+                            <input hidden name="profile_id" value="{{$profile->id}}">
+                            <button class="cr-btn w-50" type="submit">send message</button>
+                            </div>
+                        </form>
+                    </div>
+                @endif
+            @endif
             <div class="col-md-6 col-lg-6 item mx-auto text-center">
                 <div class="table-responsive">
                     <table class="table">
                         <tbody>
+                            <tr>
+                                <td><strong>Age:</strong></td>
+                                <td>{{ floor((abs(strtotime(date("Y-m-d")) - strtotime($profile->birthday))/(60*60*24*30*12))) }} years old</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gender:</strong></td>
+                                <td>{{$profile->gender}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date Joined:</strong></td>
+                                <td>{{substr($profile->user->created_at, 0, 10)}}</td>
+                            </tr>
                             @if (!Auth::guest())
                                 @if (Auth::user()->id == $profile->user_id)
                                     <tr>
@@ -22,14 +46,6 @@
                                     </tr>
                                 @endif
                             @endif
-                            <tr>
-                                <td><strong>Gender:</strong></td>
-                                <td>{{$profile->gender}}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Birthday:</strong></td>
-                                <td>{{$profile->birthday}}</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

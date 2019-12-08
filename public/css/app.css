@@ -10919,7 +10919,6 @@ img.navbar-brand {
   border: 1px solid lightgray;
   border-radius: 50px;
   margin-bottom: 10px;
-  padding-bottom: 15px;
   box-shadow: 2px 2px 40px 0px #e0e0e0;
 }
 
@@ -11406,6 +11405,109 @@ ul.progressBar {
 
 .cr-btn:hover {
   background-color: indigo;
+  color: whitesmoke;
+}
+
+.send-new-message .form-row {
+  padding-bottom: 20px;
+}
+
+form textarea {
+  resize: none;
+  border-radius: 10px;
+}
+
+.send-new-message form button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #2e381a;
+  margin: 0 auto;
+  padding: 4px 10px;
+  border: 2px solid #2e381a;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.send-new-message form .dropdown-menu li p {
+  font-size: 16px;
+}
+
+.send-new-message form .dropdown-menu li .rounded-circle,
+.inbox .rounded-circle {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  border: 1px solid lightgray;
+  box-shadow: 2px 2px 50px 0px lightgray;
+}
+
+.send-new-message form .dropdown-menu li:hover {
+  background-color: #dadada;
+  cursor: pointer;
+}
+
+.send-new-message form button:hover {
+  background-color: #2e381a;
+  color: whitesmoke;
+}
+
+.inbox p,
+span {
+  color: dimgray;
+}
+
+.inbox p.text-message {
+  color: black;
+  font-size: 16px;
+}
+
+.conversation .message-row {
+  border: 1px solid lightgray;
+  border-radius: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 2px 2px 40px 0px #e0e0e0;
+}
+
+.conversation .message-row .rounded-circle {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  border: 1px solid lightgray;
+  box-shadow: 2px 2px 50px 0px lightgray;
+}
+
+.conversation .message-row a,
+.conversation .message-row span {
+  color: dimgray;
+}
+
+.conversation .message-row p.text-message {
+  color: black;
+  font-size: 16px;
+}
+
+.conversation form button[type=submit] {
+  background: whitesmoke;
+  width: 100%;
+  text-align: center;
+  color: #2e381a;
+  margin: 0 auto;
+  padding: 4px 10px;
+  border: 2px solid #2e381a;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.conversation form button[type=submit]:hover {
+  background-color: #2e381a;
   color: whitesmoke;
 }
 

@@ -1,0 +1,56 @@
+.send-new-message .form-row {
+    padding-bottom: 20px;
+}
+
+form textarea {
+    resize: none;
+    border-radius: 10px;
+}
+
+.send-new-message form button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: rgb(46, 56, 26);
+    margin: 0 auto;
+    padding: 4px 10px;
+    border: 2px solid rgb(46, 56, 26);
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.send-new-message form .dropdown-menu li p {
+    font-size: 16px;
+}
+
+.send-new-message form .dropdown-menu li .rounded-circle,
+.inbox .rounded-circle {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border: 1px solid lightgray;
+    box-shadow: 2px 2px 50px 0px lightgray;
+}
+
+.send-new-message form .dropdown-menu li:hover {
+    background-color: rgb(218, 218, 218);
+    cursor: pointer;
+}
+
+.send-new-message form button:hover {
+    background-color: rgb(46, 56, 26);
+    color: whitesmoke;
+}
+
+.inbox p,
+span {
+    color: dimgray;
+}
+
+.inbox p.text-message {
+    color: black;
+    font-size: 16px;
+}

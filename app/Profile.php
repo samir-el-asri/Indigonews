@@ -19,4 +19,9 @@ class Profile extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function conversations()
+    {
+        return $this->hasMany('App\Conversation');
+    }
 }

@@ -15,6 +15,7 @@
             <ul class="navbar-nav ml-auto">
                 <li role="presentation" class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                 <li role="presentation" class="nav-item"><a class="nav-link" href="/articles">Articles</a></li>
+                <li role="presentation" class="nav-item"><a class="nav-link" href="#">About</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -36,7 +37,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="profiles/{{Auth::user()->profile->id}}">Profile</a>
+                            <a class="dropdown-item" href="/profiles/{{Auth::user()->profile->id}}">Profile</a>
+                            <a class="dropdown-item" href="/conversations">Inbox</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">

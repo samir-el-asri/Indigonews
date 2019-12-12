@@ -7,6 +7,7 @@
 require('./bootstrap');
 require('./complete_registration');
 require('./send_message');
+require('./custom');
 
 window.Vue = require('vue');
 

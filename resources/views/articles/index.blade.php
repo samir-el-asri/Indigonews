@@ -11,7 +11,7 @@
                             <p><em>Written by </em><a class="author" href="/profiles/{{$articles[$i]->user->profile->id}}">{{$articles[$i]->user->profile->fullname}}</a> on <span class="date"><em>{{$articles[$i]->created_at}}</em></span></p>
                             <p>{{count($articles[$i]->comments)}} comments posted.</p>
                             <hr>
-                            <p>Category: <a href="/categories/{{$articles[$i]->category_id}}" style="color: dimgray;">comics</a></p><a href="/articles/{{$articles[$i]->id}}" style="color: rgb(38,17,82);font-weight: bold;">Read more...</a>
+                            <p>Category: <a href="/categories/{{$articles[$i]->category_id}}" style="color: dimgray;">{{$articles[$i]->category->name}}</a></p><a href="/articles/{{$articles[$i]->id}}" style="color: rgb(38,17,82);font-weight: bold;">Read more...</a>
                         </div>
                         <div class="col-md-6 feature" style="background-image: url('/storage/features/{{$articles[$i]->feature}}'); border-left: 1.5px solid lightgray;"></div>
                     </div>
@@ -23,7 +23,7 @@
                             <p><em>Written by </em><a class="author" href="/profiles/{{$articles[$i]->user->profile->id}}">{{$articles[$i]->user->profile->fullname}}</a> on <span class="date"><em>{{$articles[$i]->created_at}}</em></span></p>
                             <p>{{count($articles[$i]->comments)}} comments posted.</p>
                             <hr>
-                            <p>Category: <a href="/categories/{{$articles[$i]->category_id}}" style="color: dimgray;">comics</a></p><a href="/articles/{{$articles[$i]->id}}" style="color: rgb(38,17,82);font-weight: bold;">Read more...</a>
+                            <p>Category: <a href="/categories/{{$articles[$i]->category_id}}" style="color: dimgray;">{{$articles[$i]->category->name}}</a></p><a href="/articles/{{$articles[$i]->id}}" style="color: rgb(38,17,82);font-weight: bold;">Read more...</a>
                         </div>
                     </div>
                 @endif

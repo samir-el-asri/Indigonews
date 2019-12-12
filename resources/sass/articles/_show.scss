@@ -79,7 +79,7 @@
     width: 100%;
 }
 
-.btn-group .btn {
+.btn-group .btn-primary {
     width: 100%;
     background: transparent;
     color: rgb(48, 48, 48);
@@ -94,7 +94,7 @@
     margin-bottom: 15px;
 }
 
-.btn-group button.btn:hover {
+.btn-group .btn-primary:hover {
     background-color: gray;
     color: white;
 }

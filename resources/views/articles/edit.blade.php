@@ -29,7 +29,24 @@
             <input type="file" class="form-control" name="feature">
         </div>
         <div class="form-group mt-4">
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#articleEditModalCenter">update article</button>
+            <div class="modal fade" id="articleEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="articleEditModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="articleEditModalCenterTitle">Confirm modifications</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Are you sure you want to update this article?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-warning">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 @endsection

@@ -1,3 +1,9 @@
+.conversation {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
 .conversation .message-row {
     border: 1px solid lightgray;
     border-radius: 50px;
@@ -39,7 +45,16 @@
     font-size: 15px;
 }
 
+.conversation form input[type="file"] {
+    border-radius: 100px;
+}
+
 .conversation form button[type="submit"]:hover {
     background-color: rgb(46, 56, 26);
     color: whitesmoke;
+}
+
+.conversation img.status {
+    width: 10px;
+    height: 10px;
 }

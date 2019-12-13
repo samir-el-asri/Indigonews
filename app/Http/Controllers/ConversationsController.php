@@ -8,6 +8,7 @@ use App\Message;
 use App\User;
 use App\Profile;
 use DB;
+use Storage;
 
 class ConversationsController extends Controller
 {
@@ -24,12 +25,16 @@ class ConversationsController extends Controller
     {
         // Deletes conversations that have been opened but remained empty when the inbox is opened (conversations.index)
         foreach (auth()->user()->conversations as $conversation) {
-            if(count($conversation->messages) == 0)
+            if(count($conversation->messages) == 0){
+                Storage::deleteDirectory("public/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id);
                 $conversation->delete();
+            }
         }
         foreach (auth()->user()->profile->conversations as $conversation) {
-            if(count($conversation->messages) == 0)
+            if(count($conversation->messages) == 0){
+                Storage::deleteDirectory("public/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id);
                 $conversation->delete();
+            }
         }
 
         // Displays conversations ordered by the most recently created
@@ -44,7 +49,7 @@ class ConversationsController extends Controller
             ->orWhere($recieved)
             ->orderBy("created_at", "desc")
             ->get();
-        $users = User::all();
+        $users = User::all()->except(['id', auth()->user()->id]);
 
         return view("conversations.index", compact("conversations", "users"));
     }
@@ -100,6 +105,9 @@ class ConversationsController extends Controller
             $conversation = new Conversation;
             $conversation->user_id = auth()->user()->id;
             $conversation->profile_id = $request->input("profile_id");
+            $conversation->save();
+            Storage::makeDirectory("public/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id);
+            $conversation->path = "/storage/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id;
             $conversation->save();
         }
         else

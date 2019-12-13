@@ -8,6 +8,7 @@ use App\Message;
 use App\User;
 use App\Profile;
 use DB;
+use Storage;
 
 class MessagesController extends Controller
 {
@@ -44,7 +45,8 @@ class MessagesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'message' => 'required'
+            'message' => 'required',
+            'photo' => 'nullable|image|max:5999'
         ]);
 
         // 'conversation_id' being passed in the request means the message...
@@ -77,6 +79,9 @@ class MessagesController extends Controller
                 $conversation->user_id = auth()->user()->id;
                 $conversation->profile_id = $request->input("profile_id");
                 $conversation->save();
+                Storage::makeDirectory("public/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id);
+                $conversation->path = "/storage/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id;
+                $conversation->save();
             }
             else
                 $conversation = Conversation::find($conversation_data_array[0]->id);
@@ -91,6 +96,20 @@ class MessagesController extends Controller
         $message->message = $request->input("message");
         $message->read = false;
         $message->save();
+
+        // If the request contains an image file, it will be assign to the newly created message
+        if ($request->hasFile('photo')) {
+            $filenameWithExtension = $request->file("photo")->getClientOriginalName();
+            $extension = $request->file("photo")->getClientOriginalExtension();
+            $filenameWithoutExtension = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
+            $filenameToStore = $filenameWithoutExtension."_".time()."_c".$conversation_id."_m".$message->id."_u".(auth()->user()->id).".".$extension;
+
+            $convo_dir = "public/conversations/convo_".$conversation->id."_u".$conversation->user_id."_p".$conversation->profile_id;
+            $request->file("photo")->storeAs($convo_dir, $filenameToStore);
+            
+            $message->photo = $filenameToStore;
+            $message->save();
+        }
 
         return Redirect("/conversations/$conversation_id")->with('success', 'Message sent!');
     }

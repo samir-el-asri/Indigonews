@@ -109,33 +109,31 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $this->validate($request, [
+        $data = request()->validate([
             'title' => 'required',
             'content' => 'required',
             'feature' => 'nullable|image|max:5999'
         ]);
 
         if ($request->hasFile('feature')) {
+            if($article->feature != "noimage.jpg")
+                Storage::delete("public/features/".$article->feature);
+
             $filenameWithExtension = $request->file("feature")->getClientOriginalName();
             $extension = $request->file("feature")->getClientOriginalExtension();
             $filenameWithoutExtension = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
             $filenameToStore = $filenameWithoutExtension."_".time().".".$extension;
 
             $request->file("feature")->storeAs("public/features", $filenameToStore);
-        }
 
-        $article = Article::find($article->id);
-        //$article->user_id = auth()->user()->id;
-        $article->title = $request->input("title");
-        $article->category_id = $request->input("category_id");
-        $article->content = $request->input("content");
-        if($request->hasFile("feature"))
-        {
-            if($article->feature != "noimage.jpg")
-                Storage::delete("public/features/".$article->feature);
-            $article->feature = $filenameToStore;
+            $article->update(array_merge(
+                $data,
+                ['feature' => $filenameToStore]
+            ));
         }
-        $article->save();
+        else{
+            $article->update($data);
+        }
 
         return redirect('/articles/'.$article->id)->with("success", "Article updated succesfully!");
     }

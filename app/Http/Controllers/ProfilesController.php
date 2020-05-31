@@ -79,7 +79,7 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        $this->validate($request, [
+        $data = request()->validate([
             'fullname' => 'required',
             'gender' => 'required',
             'birthday' => 'required',
@@ -88,25 +88,24 @@ class ProfilesController extends Controller
         ]);
 
         if ($request->hasFile('profile_image')) {
+            if($profile->profile_image != "noimage.jpg")
+                Storage::delete("public/profile_images/".$profile->profile_image);
+
             $filenameWithExtension = $request->file("profile_image")->getClientOriginalName();
             $extension = $request->file("profile_image")->getClientOriginalExtension();
             $filenameWithoutExtension = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
             $filenameToStore = $filenameWithoutExtension."_".time().".".$extension;
 
             $request->file("profile_image")->storeAs("public/profile_images", $filenameToStore);
-        }
 
-        $profile = Profile::find($profile->id);
-        $profile->fullname = $request->input('fullname');
-        $profile->gender = $request->input('gender');
-        $profile->birthday = $request->input('birthday');
-        $profile->bio = $request->input('bio');
-        if ($request->hasFile('profile_image')){
-            if($profile->profile_image != "noimage.jpg")
-                Storage::delete("public/profile_images/".$profile->profile_image);
-            $profile->profile_image = $filenameToStore;
+            $profile->update(array_merge(
+                $data,
+                ['profile_image' => $filenameToStore]
+            ));
         }
-        $profile->save();
+        else{
+            $profile->update($data);
+        }
 
         return redirect('/profiles/'.$profile->id)->with([
             "profile" => $profile,

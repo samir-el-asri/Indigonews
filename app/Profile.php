@@ -15,6 +15,11 @@ class Profile extends Model
         'fullname', 'gender', 'birthday', 'bio', 'profile_image'
     ];
 
+    public function profileImage(){
+        $path = '/storage/profile_images/'.($this->profile_image);
+        return $path;
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');

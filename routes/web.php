@@ -18,7 +18,6 @@ Auth::routes();
 Route::get('/home', 'ArticlesController@index')->name('home');
 
 Route::resource('articles', 'ArticlesController');
-Route::resource('categories', 'CategoriesController');
 Route::resource('profiles', 'ProfilesController');
 Route::resource('comments', 'CommentsController');
 Route::resource('conversations', 'ConversationsController');
@@ -27,4 +26,11 @@ Route::resource('messages', 'MessagesController');
 // Complete Profile Registration Page
 Route::get('profiles/{profile}/complete_registration', function (App\Profile $profile) {
     return view('profiles.complete_registration', compact("profile"));
+});
+
+// Pulls up category-specific articles only
+Route::get('categories/{category}', function (App\Category $category) {
+    $category = App\Category::find($category->id);
+    $articles = $category->articles;
+    return view("articles.index", compact("articles"));
 });

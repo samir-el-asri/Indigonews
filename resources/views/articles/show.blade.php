@@ -13,13 +13,13 @@
                         <a href="/profiles/{{$article->user->profile->id}}">{{$article->user->profile->fullname}}</a>
                         <span class="date">{{$article->created_at}} </span>
                         </p>
-                        <img src="/storage/features/{{$article->feature}}" />
+                        <img src="{{$article->feature()}}" />
                     </div>
                     <div class="text">
                         <p>{!!$article->content!!}</p>
                     </div>
                     <p class="text-center">Categorty: <a href="/categories/{{$article->category_id}}">{{$article->category->name}}</a></p>
-                    
+
                     @if (!Auth::guest())
                         @if (Auth::user()->id == $article->user_id)
                             <hr>
@@ -29,8 +29,8 @@
                                 </a>
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#articleDeleteModalCenter">delete article</button>
                                 <form method="post" action="/articles/{{$article->id}}">
-                                    <input hidden name="_method" value="DELETE">
-                                    <input hidden name="_token" value="{{ csrf_token() }}">
+                                    @method('DELETE')
+                                    @csrf
 
                                     <div class="modal fade" id="articleDeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="articleDeleteModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">

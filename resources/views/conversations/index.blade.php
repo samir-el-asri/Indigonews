@@ -4,7 +4,7 @@
     <div class="send-new-message col-md-10 mx-auto">
         <h4 class="pt-2 pb-2">Send new message</h4>
         <form method="POST" action="/messages">
-            <input hidden name="_token" value="{{ csrf_token() }}">
+            @csrf
             <div class="form-row">
                 <div class="col-md-12">
                     <textarea name="message" cols="4" class="form-control"></textarea>
@@ -17,7 +17,7 @@
                         <ul role="menu" class="dropdown-menu w-100" id="choose-message-recipient">
                             @foreach ($users as $user)
                                 <li role="presentation" class="dropdown-item d-flex" href="#">
-                                    <div class="rounded-circle" style="background-image: url('/storage/profile_images/{{$user->profile->profile_image}}');"></div>
+                                    <div class="rounded-circle" style="background-image: url({{$user->profile->profileImage()}});"></div>
                                     <p class="pl-4 align-self-end">{{$user->profile->fullname}}</p>
                                     <span hidden>{{$user->profile->id}}</span>
                                 </li>
@@ -41,10 +41,10 @@
                     <div class="row d-flex">
                         <div class="col-md-2">
                             @if (Auth::user()->id == $conversation->user_id)
-                                <div class="rounded-circle mx-auto" style="background-image: url('/storage/profile_images/{{$conversation->profile->profile_image}}');"></div>
+                                <div class="rounded-circle mx-auto" style="background-image: url({{$conversation->profile->profileImage()}});"></div>
                                 <p class="pt-2 d-block text-center">{{$conversation->profile->user->username}}</p>
                             @else
-                                <div class="rounded-circle mx-auto" style="background-image: url('/storage/profile_images/{{$conversation->user->profile->profile_image}}');"></div>
+                                <div class="rounded-circle mx-auto" style="background-image: url({{$conversation->user->profile->profileImage()}});"></div>
                                 <p class="pt-2 d-block text-center">{{$conversation->user->username}}</p>
                             @endif
                         </div>

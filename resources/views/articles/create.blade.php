@@ -2,7 +2,7 @@
 
 @section('content')
     <form method="post" action="/articles" enctype="multipart/form-data">
-        <input hidden name="_token" value="{{ csrf_token() }}">
+        @csrf
         <div class="from-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" name="title" placeholder="title">

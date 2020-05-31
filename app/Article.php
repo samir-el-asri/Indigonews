@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    protected $fillable = [
+        'title', 'content', 'feature'
+    ];
+
+    public function feature(){
+        $path = '/storage/features/'.($this->feature);
+        return $path;
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');

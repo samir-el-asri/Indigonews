@@ -2,8 +2,8 @@
 
 @section('content')
     <form method="post" action="/articles/{{$article->id}}" enctype="multipart/form-data">
-        <input hidden name="_token" value="{{ csrf_token() }}">
-        <input hidden name="_method" value="PUT">
+        @csrf
+        @method('PUT')
         <div class="from-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" name="title" value="{{$article->title}}">

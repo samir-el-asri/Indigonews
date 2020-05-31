@@ -9,13 +9,13 @@
                 <div class="row message-row col-8 d-flex mt-2">
             @endif
                     <div class="col-2 w-100">
-                        <div class="rounded-circle mx-auto" style="background-image: url(/storage/profile_images/{{$message->user->profile->profile_image}});"></div>
+                        <div class="rounded-circle mx-auto" style="background-image: url({{$message->user->profile->profileImage()}});"></div>
                         <p class="w-100 text-center"><a href="/profiles/{{$message->user->profile->id}}">{{$message->user->username}}</a></p>
                     </div>
                     <div class="col-10 w-100 align-self-center">
                         <p class="text-message">{{$message->message}}</p>
                         @if (!is_null($message->photo))
-                            <img class="w-100 p-2" src="{{$message->conversation->path}}/{{$message->photo}}">
+                            <img class="w-100 p-2" src="{{$message->photo()}}">
                         @endif
                         <span class="w-100 d-inline-block text-right">{{$message->created_at}}</span>
                         <div class="row w-100">
@@ -33,7 +33,7 @@
         <hr>
         <div class="col-12 mt-2 mx-auto">
             <form method="POST" action="/messages" enctype="multipart/form-data">
-                <input hidden name="_token" value="{{ csrf_token() }}">
+                @csrf
                 <input hidden name="conversation_id" value="{{$conversation->id}}">
                 <div class="form-row">
                     <div class="col-9 mb-2">

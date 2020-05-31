@@ -14,8 +14,8 @@
     </div>
 
     <form class="profile-editor" method="post" action="/profiles/{{$profile->id}}" enctype="multipart/form-data">
-        <input hidden name="_token" value="{{ csrf_token() }}">
-        <input hidden name="_method" value="PUT">
+        @csrf
+        @method('PUT')
         <div class="from-group">
             <label for="fullname">Fullname</label>
             <input type="text" class="form-control form-element" name="fullname" placeholder="{{$profile->fullname}}">

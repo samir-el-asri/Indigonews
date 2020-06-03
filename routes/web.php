@@ -34,3 +34,6 @@ Route::get('categories/{category}', function (App\Category $category) {
     $articles = $category->articles;
     return view("articles.index", compact("articles"));
 });
+
+// Handles the deletion (excluding) of conversations
+Route::post('exclude/{conversation}', 'ExcludesController@store');

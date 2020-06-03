@@ -20,4 +20,9 @@ class Conversation extends Model
     {
         return $this->hasMany('App\Message')->orderBy("created_at", "asc");
     }
+
+    public function excluders()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
 }

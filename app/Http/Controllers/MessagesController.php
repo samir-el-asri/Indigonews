@@ -111,7 +111,7 @@ class MessagesController extends Controller
             $message->save();
         }
 
-        return Redirect("/conversations/$conversation_id")->with('success', 'Message sent!');
+        return redirect()->action('ConversationsController@show', compact('conversation'));
     }
 
     /**

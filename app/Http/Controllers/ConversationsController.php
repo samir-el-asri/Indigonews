@@ -45,10 +45,25 @@ class ConversationsController extends Controller
             "profile_id" => (auth()->user()->profile->id)
         ];
 
+        // Starts here: this part checks if any new messages have been sent in deleted (excluded) conversations
+        // If they have, the deleted (excluded) conversation will re-appear with only the new messagess displayed
+        // If not, the conversation will stay deleted (hidden)
+        $excludedConversationsArray = auth()->user()->excluding()->select('conversation_id', 'num_msgs_when_excluded')->get();
+        $excludedConversations = array();
+        foreach($excludedConversationsArray as $exc){
+            $num_msgs_when_excluded = $exc['num_msgs_when_excluded'];
+            $num_msgs_now  = Conversation::find($exc['conversation_id'])->messages->count();
+            if($num_msgs_now == $num_msgs_when_excluded)
+                array_push($excludedConversations, $exc['conversation_id']);
+        }
+        // Ends here.
+
         $conversations = Conversation::where($sent)
             ->orWhere($recieved)
             ->orderBy("created_at", "desc")
-            ->get();
+            ->get()
+            ->except($excludedConversations);
+            
         $users = User::all()->except(['id', auth()->user()->id]);
 
         return view("conversations.index", compact("conversations", "users"));
@@ -76,20 +91,6 @@ class ConversationsController extends Controller
             'profile_id' => 'required'
         ]);
 
-        // Creates a new conversation after checking if there's already an existing one
-        // $sent = [
-        //     "user_id" => (auth()->user()->id),
-        //     "profile_id" => ($request->input("profile_id"))
-        // ];
-        // $recieved = [
-        //     "user_id" => (Profile::find($request->input("profile_id"))->user_id),
-        //     "profile_id" => (auth()->user()->profile->id)
-        // ];
-        // $conversation = Conversation::where($sent)->orWhere($recieved)->first();
-
-        // The above "where/orWhere" Eloquent collection-based search didn't work
-        // Had to resort to a more explicit brute SQL-based search
-        
         // I started/sent the first message of the conversation
         $myUserId = auth()->user()->id;
         $theirProfileId = $request->input("profile_id");
@@ -113,7 +114,7 @@ class ConversationsController extends Controller
         else
             $conversation = Conversation::find($conversation_data_array[0]->id);
         
-        return Redirect("/conversations/".$conversation->id);
+        return redirect()->action('ConversationsController@show', compact('conversation'));
     }
 
     /**
@@ -137,8 +138,36 @@ class ConversationsController extends Controller
             }
         }
         $conversation->refresh();
+        $messages = $conversation->messages;
 
-        return view("conversations.show", compact("conversation"));
+        // Checks if this conversation has been deleted (excluded) before, at least once
+        $exists = DB::table('conversation_user')
+                    ->select()
+                    ->where([
+                        'user_id' => auth()->user()->id,
+                        'conversation_id' => $conversation->id])
+                    ->first();
+        
+        // If it has, Therefore checks if there are any new messages that have been sent to it
+            // Then it will ONLY return/display the new messages in the (conversations.show) page
+            // Also if you access the conversation through (profiles.show) it will show 0 messages
+        if(!is_null($exists)){
+            $num_msgs_when_excluded = $exists->num_msgs_when_excluded;
+            $num_msgs_now  = Conversation::find($exists->conversation_id)->messages->count();
+            //dd($num_msgs_now." ".$num_msgs_when_excluded);
+            if($num_msgs_now > $num_msgs_when_excluded){
+                $n = $num_msgs_now - $num_msgs_when_excluded;
+                $messages = $conversation->messages
+                                ->sortBy("created_at", 0, true)
+                                ->take($n);
+                $messages = $messages->sortBy("created_at", 0, false);
+            }
+            else{
+                $messages = null;
+            }
+        }
+
+        return view("conversations.show", compact("conversation", "messages"));
     }
 
     /**

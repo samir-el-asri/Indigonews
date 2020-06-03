@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Conversation');
     }
+
+    public function excluding()
+    {
+        return $this->belongsToMany('App\Conversation')->withTimestamps();
+    }
 }

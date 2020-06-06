@@ -6,6 +6,7 @@ use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
 class ArticlesController extends Controller
 {
@@ -93,10 +94,10 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
+        $this->authorize('update', $article);
+
         $article = Article::find($article->id);
         $categories = Category::all();
-        if(auth()->user()->id != $article->user_id)
-            return redirect('/articles/'.$article->id)->with("error", "You cannot access this page!");
         return view("articles.edit", compact("article", "categories"));
     }
 
@@ -109,6 +110,8 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, Article $article)
     {
+        $this->authorize('update', $article);
+        
         $data = request()->validate([
             'title' => 'required',
             'content' => 'required',
@@ -146,10 +149,9 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $article = Article::find($article->id);
-        
-        if(auth()->user()->id != $article->user_id)
-            return redirect('/articles/'.$article->id)->with("error", "You cannot access this page!");
 
         if($article->feature != "noimage.jpg")
             Storage::delete("public/features/".$article->feature);

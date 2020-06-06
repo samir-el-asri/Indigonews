@@ -53,46 +53,44 @@
         </div>
                     
         @if (!Auth::guest())
-            @if (Auth::user()->id == $profile->user_id)
+            @canany(['update', 'delete'], $profile)
                 <div class="col-md-6 col-lg-6 item mx-auto text-center">
                     <hr>
                     <div class="btn-group" role="group">
-                        <a href="/profiles/{{$profile->id}}/edit">
-                            <button class="btn btn-primary" type="button">edit profile</button>
-                        </a>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#profileDeleteModalCenter">delete account permanently</button>
-                        <form class="delete-account" method="post" action="/profiles/{{$profile->id}}">
-                            @method('DELETE')
-                            @csrf
-                            <div class="modal fade" id="profileDeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="profileDeleteModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="profileDeleteModalCenterTitle">Confirm delete</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">Are you sure you want to delete this profile?</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                        @can('update', $profile)
+                            <a href="/profiles/{{$profile->id}}/edit">
+                                <button class="btn btn-primary" type="button">edit profile</button>
+                            </a>
+                        @endcan
+                        @can('delete', $profile)
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#profileDeleteModalCenter">delete account permanently</button>
+                            <form class="delete-account" method="post" action="/profiles/{{$profile->id}}">
+                                @method('DELETE')
+                                @csrf
+                                <div class="modal fade" id="profileDeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="profileDeleteModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="profileDeleteModalCenterTitle">Confirm delete</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">Are you sure you want to delete this profile?</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        @endcan
                     </div>
                 </div>
-            @endif
+            @endcanany
         @endif
     </div>
 </div>
 
-{{-- Script for confirmation dialog box before account delete --}}
-<script>
-    $(".delete-account").on("submit", function(){
-        return confirm("Are you sure?", "Delete account permanently");
-    });
-</script>
 @endsection

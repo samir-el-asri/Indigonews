@@ -21,38 +21,41 @@
                     <p class="text-center">Categorty: <a href="/categories/{{$article->category_id}}">{{$article->category->name}}</a></p>
 
                     @if (!Auth::guest())
-                        @if (Auth::user()->id == $article->user_id)
+                        @canany(['update', 'delete'], $article)
                             <hr>
                             <div class="btn-group" role="group">
-                                <a href="/articles/{{$article->id}}/edit">
-                                    <button class="btn btn-primary" type="button">edit article</button>
-                                </a>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#articleDeleteModalCenter">delete article</button>
-                                <form method="post" action="/articles/{{$article->id}}">
-                                    @method('DELETE')
-                                    @csrf
+                                @can('update', $article)
+                                    <a href="/articles/{{$article->id}}/edit">
+                                        <button class="btn btn-primary" type="button">edit article</button>
+                                    </a>
+                                @endcan
+                                @can('delete', $article)
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#articleDeleteModalCenter">delete article</button>
+                                    <form method="post" action="/articles/{{$article->id}}">
+                                        @method('DELETE')
+                                        @csrf
 
-                                    <div class="modal fade" id="articleDeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="articleDeleteModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="articleDeleteModalCenterTitle">Confirm delete</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">Are you sure you want to delete this article?</div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                        <div class="modal fade" id="articleDeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="articleDeleteModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="articleDeleteModalCenterTitle">Confirm delete</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Are you sure you want to delete this article?</div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                </form>
+                                    </form>
+                                @endcan
                             </div>
-                        @endif
+                        @endcanany
                     @endif
                     @include('articles.article_comments_section')
                 </div>

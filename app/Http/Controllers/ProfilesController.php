@@ -6,6 +6,7 @@ use App\Profile;
 use App\Articles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
 class ProfilesController extends Controller
 {
@@ -64,9 +65,9 @@ class ProfilesController extends Controller
      */
     public function edit(Profile $profile)
     {
+        $this->authorize('update', $profile);
+
         $profile = Profile::find($profile->id);
-        if(auth()->user()->id != $profile->user_id)
-            return redirect('/articles')->with("error", "You cannot access this page!");
         return view("profiles.edit", compact("profile"));
     }
 
@@ -79,6 +80,8 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
+        $this->authorize('update', $profile);
+
         $data = request()->validate([
             'fullname' => 'required',
             'gender' => 'required',
@@ -121,6 +124,8 @@ class ProfilesController extends Controller
      */
     public function destroy(Profile $profile)
     {
+        $this->authorize('delete', $profile);
+
         $profile = Profile::find($profile->id);
 
         // Deletes profile image from storage

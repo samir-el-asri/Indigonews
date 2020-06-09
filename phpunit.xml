@@ -29,5 +29,7 @@
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
+        <!-- Check false if you want to 'php artisan test' to run successfully -->
+        <env name="TELESCOPE_ENABLED" value="true"/>
     </php>
 </phpunit>

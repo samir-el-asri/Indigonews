@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Article::class, function (Faker $faker) {
     return [
-        'user_id'=>17,
+        'user_id'=>18,
         'title'=>$faker->catchPhrase(),
         'content'=>implode($faker->paragraphs(3)),
         'feature'=>'noimage.jpg',

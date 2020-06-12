@@ -37,3 +37,9 @@ Route::get('categories/{category}', function (App\Category $category) {
 
 // Handles the deletion (excluding) of conversations
 Route::post('exclude/{conversation}', 'ExcludesController@store');
+
+// Handles the following/unfollowing of profiles by users
+Route::post('follow/{profile}', 'FollowsController@store');
+
+// Handles the liking/disliking of articles by profiles
+Route::post('like/{article}', 'LikesController@store');

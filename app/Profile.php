@@ -20,13 +20,27 @@ class Profile extends Model
         return $path;
     }
 
+    // Profile belongs to one single User
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
+    // Profile engages in many Conversations
     public function conversations()
     {
         return $this->hasMany('App\Conversation');
+    }
+
+    // Profile is followed by many Users
+    public function followers()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
+
+    // Profiles likes many Articles
+    public function liking()
+    {
+        return $this->belongsToMany('App\Article')->withTimestamps();
     }
 }

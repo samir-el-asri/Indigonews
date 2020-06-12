@@ -31,6 +31,6 @@ class CreateConversationUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conversation_user_pivot');
+        Schema::dropIfExists('conversation_user');
     }
 }

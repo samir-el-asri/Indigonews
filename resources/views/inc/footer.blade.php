@@ -23,8 +23,8 @@
                     </ul>
                 </div>
                 <div class="col-md-6 item text">
-                    <h3>Random News</h3>
-                    <p>Presenting you the hottest news and articles about what&#39;s poppin&#39; around the world in the most random, unbiased and manipulative manner to distract you from the pile of shit that&#39;s accumulating in your miserable urban life.</p>
+                    <h3>Indigo News</h3>
+                    <p>Presenting you the hottest news and articles about what&#39;s poppin&#39; around the world in the most Indigo, unbiased and manipulative manner to distract you from the pile of shit that&#39;s accumulating in your miserable urban life.</p>
                 </div>
                 <div class="col item social">
                     <a href="#" style="background-image:url('/storage/social/facebook.png')"></a>
@@ -34,7 +34,7 @@
                     </a>
                 </div>
             </div>
-            <p class="copyright">Random News © 2019</p>
+            <p class="copyright">Indigo News © 2019</p>
         </div>
     </footer>
 </div>

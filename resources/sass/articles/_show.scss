@@ -41,7 +41,7 @@
     padding-left: 3px;
 }
 
-.article-clean .intro img {
+.article-clean .intro img.feature {
     display: block;
     width: 70%;
     margin: 20px auto 0px auto;
@@ -101,4 +101,8 @@
 
 .article-clean a {
     color: rgb(48, 48, 48);
+}
+
+table.modal-table td {
+    text-align: center;
 }

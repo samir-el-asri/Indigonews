@@ -12,11 +12,13 @@ class Message extends Model
         return $path;
     }
 
+    // Message belongs to one single Conversation
     public function conversation()
     {
         return $this->belongsTo('App\Conversation');
     }
 
+    // Message is sent by one single user
     public function user()
     {
         return $this->belongsTo('App\User');

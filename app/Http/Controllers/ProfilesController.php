@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Profile;
 use App\Articles;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -54,7 +55,10 @@ class ProfilesController extends Controller
     public function show(Profile $profile)
     {
         $profile = Profile::find($profile->id);
-        return view("profiles.show", compact("profile"));
+        $follows = ((auth()->user()) ? auth()->user()->following->contains($profile) : false);
+        $users = $profile->followers()->pluck('user_id');
+        $followers = User::whereIn("id", $users)->get();
+        return view("profiles.show", compact("profile", "follows", "followers"));
     }
 
     /**

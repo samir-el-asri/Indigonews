@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,7 @@ class ArticlesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except'=>["index", "show"]]);
+        $this->middleware('auth', ['except'=>["show"]]);
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +22,12 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy("created_at", "desc")->get();
+        $users = auth()->user()->following->pluck('user_id');
+        $articles = Article::whereIn("user_id", $users)
+                            ->orWhereIn("user_id", [auth()->user()->id])
+                            ->with("user")
+                            ->latest()
+                            ->get();
         return view("articles.index", compact("articles"));
     }
 
@@ -83,7 +89,10 @@ class ArticlesController extends Controller
     {
         $article = Article::find($article->id);
         $comments = $article->comments;
-        return view("articles.show", compact("article", "comments"));
+        $likes = ((auth()->user()) ? auth()->user()->profile->liking->contains($article) : false);
+        $users = $article->likes()->pluck('user_id');
+        $likers = User::whereIn("id", $users)->get();
+        return view("articles.show", compact("article", "comments", "likes", "likers"));
     }
 
     /**

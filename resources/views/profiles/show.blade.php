@@ -8,7 +8,55 @@
                 <div class="rounded-circle profile-image mb-4" style="background-image: url({{$profile->profileImage()}});"></div>
                 <h3 class="fullname">{{$profile->fullname}}</h3>
                 <p class="username">{{$profile->user->username}}</p>
+                @if ($profile->followers->count() > 0)
+                    {{-- Followers pop-up Bootstrap Modal --}}
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target=".bd-example-modal-sm">{{$profile->followers->count()}} Followers</button>
+                    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="text-align: left" id="exampleModalLongTitle">Followers</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <table class="table">
+                                    <tbody>
+                                        @foreach ($followers as $follower)
+                                            <tr>
+                                                <td class="w-25">
+                                                    <img style="width: 30px; height: 30px;" class="rounded-circle mx-auto" src="{{$follower->profile->profileImage()}}">
+                                                </td>
+                                                <td class="w-100">
+                                                    <a style="font-size: 16px;" class="blank-a mx-auto" href="/profiles/{{$follower->profile->id}}">&#64;{{$follower->username}}</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Modal ends here --}}
+                @else
+                    <p class="fullname">{{$profile->followers->count()}} Followers</p>
+                @endif
                 <p class="bio">{{$profile->bio}}</p>
+                @if (!Auth::guest())
+                    @if (Auth::user()->profile->id != $profile->id)
+                        {{-- <follow-button profile-id="{{$profile->id}}" follows="{{$follows}}"></follow-button> --}}
+                        <form method="POST" action="/follow/{{$profile->id}}">
+                            @csrf
+                            <button class="cr-btn w-25 mb-4" type="submit">
+                                @if ($follows)
+                                    unfollow
+                                @else
+                                    follow
+                                @endif
+                            </button>
+                        </form>
+                    @endif
+                @endif
             </div>
             @if (!Auth::guest())
                 @if (Auth::user()->id != $profile->user_id)

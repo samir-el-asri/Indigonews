@@ -53,33 +53,45 @@ class User extends Authenticatable
         });
     }
 
+    // User posts many Articles
     public function articles()
     {
         return $this->hasMany('App\Article');
     }
 
+    // User owns one single Profile
     public function profile()
     {
         return $this->hasOne('App\Profile');
     }
 
+    // User posts many Comments
     public function comments()
     {
         return $this->hasMany('App\Comment');
     }
 
+    // User sends many Messages
     public function messages()
     {
         return $this->hasMany('App\Message');
     }
 
+    // User starts many Conversations
     public function conversations()
     {
         return $this->hasMany('App\Conversation');
     }
 
+    // User deletes (excludes/hides) many Conversations
     public function excluding()
     {
         return $this->belongsToMany('App\Conversation')->withTimestamps();
+    }
+
+    // User follows many Profiles
+    public function following()
+    {
+        return $this->belongsToMany('App\Profile')->withTimestamps();
     }
 }

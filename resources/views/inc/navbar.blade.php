@@ -1,8 +1,8 @@
 <div id="navbar-categories">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm navigation-clean-button">
         <div class="container">
-            <div>
-                <img class="navbar-brand" src="/storage/img/logo.png"/>
+            <div class="d-flex justify-content-center mx-auto align-items-center">
+                <img class="navbar-brand" style="width: 30px" src="/storage/img/logo.png"/>
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>

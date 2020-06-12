@@ -71,3 +71,30 @@
     margin: 0 auto;
     box-shadow: 3px 3px 100px 0px lightgray, -3px -3px 100px 0px lightgray;
 }
+
+a.blank-a {
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+
+a.blank-a:hover {
+    text-decoration: none;
+    color: dimgray;
+}
+
+button.btn.btn-link {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+button.btn.btn-link:hover {
+    text-decoration: none;
+    color: dimgray;
+}
+
+table.modal-table td {
+    text-align: center;
+}

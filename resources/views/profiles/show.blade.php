@@ -8,10 +8,12 @@
                 <div class="rounded-circle profile-image mb-4" style="background-image: url({{$profile->profileImage()}});"></div>
                 <h3 class="fullname">{{$profile->fullname}}</h3>
                 <p class="username">{{$profile->user->username}}</p>
+
+                {{-- Followers: --}}
                 @if ($profile->followers->count() > 0)
                     {{-- Followers pop-up Bootstrap Modal --}}
-                    <button type="button" class="btn btn-link" data-toggle="modal" data-target=".bd-example-modal-sm">{{$profile->followers->count()}} Followers</button>
-                    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target=".followers-modal">{{$profile->followers->count()}} Followers</button>
+                    <div class="modal fade followers-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -39,8 +41,44 @@
                     </div>
                     {{-- Modal ends here --}}
                 @else
-                    <p class="fullname">{{$profile->followers->count()}} Followers</p>
+                    <span class="zero-follow">{{$profile->followers->count()}} Followers</span>
                 @endif
+
+                {{-- Following: --}}
+                @if ($profile->user->following->count() > 0)
+                    {{-- Following pop-up Bootstrap Modal --}}
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target=".following-modal">Following {{$profile->user->following->count()}}</button>
+                    <div class="modal fade following-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="text-align: left" id="exampleModalLongTitle">Following</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <table class="table">
+                                    <tbody>
+                                        @foreach ($followings as $following)
+                                            <tr>
+                                                <td class="w-25">
+                                                    <img style="width: 30px; height: 30px;" class="rounded-circle mx-auto" src="{{$following->profile->profileImage()}}">
+                                                </td>
+                                                <td class="w-100">
+                                                    <a style="font-size: 16px;" class="blank-a mx-auto" href="/profiles/{{$following->profile->id}}">&#64;{{$following->username}}</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Modal ends here --}}
+                @else
+                    <span class="zero-follow">Following {{$profile->user->following->count()}}</span>
+                @endif
+                
                 <p class="bio">{{$profile->bio}}</p>
                 @if (!Auth::guest())
                     @if (Auth::user()->profile->id != $profile->id)

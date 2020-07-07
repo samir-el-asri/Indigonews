@@ -13,11 +13,18 @@
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav mx-auto">
                     <li role="presentation" class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                     <li role="presentation" class="nav-item"><a class="nav-link" href="/articles">Articles</a></li>
                     <li role="presentation" class="nav-item"><a class="nav-link" href="#">About</a></li>
                 </ul>
+
+                {{-- Search by Algolia --}}
+                <form class="form-inline ml-auto" method="GET" action="/search">
+                    @csrf
+                    <input required class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-light action-button my-2 my-sm-0" type="submit">Search</button>
+                </form>
     
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">

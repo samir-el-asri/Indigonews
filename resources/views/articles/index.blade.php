@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     @if (count($articles) > 0)
         <div class="container articles_home">
             @for ($i = 0; $i < count($articles); $i++)
@@ -8,20 +9,20 @@
                     <div class="row">
                         <div class="col-md-6" style="padding: 20px;">
                             <h2>{{$articles[$i]->title}}</h2>
-                            <p><em>Written by </em><a class="author" href="/profiles/{{$articles[$i]->user->profile->id}}">{{$articles[$i]->user->profile->fullname}}</a> on <span class="date"><em>{{$articles[$i]->created_at}}</em></span></p>
+                            <p><em>Written by&nbsp;&nbsp;</em><a class="author" href="/profiles/{{$articles[$i]->user->profile->id}}">{{$articles[$i]->user->profile->fullname}}</a> on <span class="date"><em>{{$articles[$i]->created_at}}</em></span></p>
                             <span style="color: black">{{count($articles[$i]->comments)}} comments</span>
                             <span class="pl-1" style="color: black; border-left: 1px solid lightgray;">{{count($articles[$i]->likes)}} likes</span>
                             <hr>
                             <p>Category: <a href="/categories/{{$articles[$i]->category_id}}" style="color: dimgray;">{{$articles[$i]->category->name}}</a></p><a href="/articles/{{$articles[$i]->id}}" style="color: rgb(38,17,82);font-weight: bold;">Read more...</a>
                         </div>
-                        <div class="col-md-6 feature" style="background-image: url('/storage/features/{{$articles[$i]->feature}}'); border-left: 1.5px solid lightgray;"></div>
+                        <div class="col-md-6 feature" style="background-image: url('{{$articles[$i]->feature()}}'); border-left: 1.5px solid lightgray;"></div>
                     </div>
                 @else
                     <div class="row">
-                        <div class="col-md-6 feature" style="background-image: url('/storage/features/{{$articles[$i]->feature}}'); border-left: 1.5px solid lightgray;"></div>
+                        <div class="col-md-6 feature" style="background-image: url('{{$articles[$i]->feature()}}'); border-left: 1.5px solid lightgray;"></div>
                         <div class="col-md-6" style="padding: 20px;">
                             <h2>{{$articles[$i]->title}}</h2>
-                            <p><em>Written by </em><a class="author" href="/profiles/{{$articles[$i]->user->profile->id}}">{{$articles[$i]->user->profile->fullname}}</a> on <span class="date"><em>{{$articles[$i]->created_at}}</em></span></p>
+                            <p><em>Written by&nbsp;&nbsp;</em><a class="author" href="/profiles/{{$articles[$i]->user->profile->id}}">{{$articles[$i]->user->profile->fullname}}</a> on <span class="date"><em>{{$articles[$i]->created_at}}</em></span></p>
                             <span style="color: black">{{count($articles[$i]->comments)}} comments</span>
                             <span class="pl-1" style="color: black; border-left: 1px solid lightgray;">{{count($articles[$i]->likes)}} likes</span>
                             <hr>

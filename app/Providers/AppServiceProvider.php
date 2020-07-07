@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Search\All_index;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Builder;
 // Import Builder where defaultStringLength method is defined
@@ -29,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         //Schema::defaultStringLength(255);
         Builder::defaultStringLength(191);
         // Update defaultStringLength
+        All_index::bootSearchable();
     }
 }

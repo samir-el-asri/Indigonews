@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Profile extends Model
 {
+    use Searchable;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -42,5 +45,27 @@ class Profile extends Model
     public function liking()
     {
         return $this->belongsToMany('App\Article')->withTimestamps();
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->only('id', 'fullname');
+        
+        return $array;
+    }
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'profiles_index';
     }
 }

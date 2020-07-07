@@ -55,10 +55,17 @@ class ProfilesController extends Controller
     public function show(Profile $profile)
     {
         $profile = Profile::find($profile->id);
+        $user = User::where('id', $profile->user_id)->first();
+        
         $follows = ((auth()->user()) ? auth()->user()->following->contains($profile) : false);
+
         $users = $profile->followers()->pluck('user_id');
         $followers = User::whereIn("id", $users)->get();
-        return view("profiles.show", compact("profile", "follows", "followers"));
+
+        $users = $user->following->pluck('user_id');
+        $followings = User::whereIn("id", $users)->get();
+
+        return view("profiles.show", compact("profile", "follows", "followers", "followings"));
     }
 
     /**

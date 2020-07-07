@@ -150,3 +150,14 @@ img.navbar-brand {
     max-width: 100%;
     background-color: whitesmoke;
 }
+
+.navigation-clean-button form.form-inline input[type='search'] {
+    border-radius: 50px;
+    border: 1px solid gray;
+}
+
+.navigation-clean-button form.form-inline button[type='submit'] {
+    text-shadow: 1px 1px 13px black;
+    height: 38px;
+    padding: 4px 20px;
+}

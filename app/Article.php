@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'title', 'content', 'feature'
     ];
@@ -37,5 +40,31 @@ class Article extends Model
     public function likes()
     {
         return $this->belongsToMany('App\Profile')->withTimestamps();
+    }
+
+    // Overriding the toSearchableArray method to index relationships between 'Article' and 'User'.
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+        // Specifying which columns should be indexed(?)/searchable
+        $array = $this->only('id', 'title', 'content');
+
+        $array = $this->transform($array);
+
+        $array['user_id'] = $this->user->id;
+        // $array['user_id'] = $this->user['id'];
+        $array['created_at'] = date('Y-m-d H:i:s', strtotime($this->created_at));
+
+        return $array;
+    }
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'articles_index';
     }
 }

@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "allowJs": true,
+        "typeRoots": ["./types", "./node_modules/@types/vue-instantsearch"]
+    },
+    "exclude": ["node_modules", "./types"]
+}

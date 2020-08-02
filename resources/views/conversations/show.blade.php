@@ -57,27 +57,33 @@
         @endif
         <hr>
         <div class="col-12 mt-2 mx-auto">
-            <form method="POST" action="/messages" enctype="multipart/form-data">
-                @csrf
-                <input hidden name="conversation_id" value="{{$conversation->id}}">
-                <div class="form-row">
-                    <div class="col-9 mb-2">
-                        <textarea name="message" cols="2" class="form-control"></textarea>
-                    </div>
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col mb-1 w-100">
-                                <input type="file" name="photo" class="form-control">
+            @if ($blocked)
+                <h5 class="text-center">
+                    <strong>You can no longer send messages to this person!</strong>
+                </h5>
+            @else
+                <form method="POST" action="/messages" enctype="multipart/form-data">
+                    @csrf
+                    <input hidden name="conversation_id" value="{{$conversation->id}}">
+                    <div class="form-row">
+                        <div class="col-9 mb-2">
+                            <textarea name="message" cols="2" class="form-control"></textarea>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col mb-1 w-100">
+                                    <input type="file" name="photo" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col w-100">
+                                    <button id="sendMessageBtn" class="form-control" type="submit">send message</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col w-100">
-                                <button id="sendMessageBtn" class="form-control" type="submit">send message</button>
-                            </div>
-                        </div>
                     </div>
-                </div>
             </form>
+            @endif
         </div>
     </div>
 @endsection

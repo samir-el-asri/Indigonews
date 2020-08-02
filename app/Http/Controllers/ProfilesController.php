@@ -57,15 +57,17 @@ class ProfilesController extends Controller
         $profile = Profile::find($profile->id);
         $user = User::where('id', $profile->user_id)->first();
         
-        $follows = ((auth()->user()) ? auth()->user()->following->contains($profile) : false);
-
+        $followed = ((auth()->user()) ? auth()->user()->following->contains($profile) : false);
+        $blocking = ((auth()->user()) ? auth()->user()->blocking->contains($profile) : false);
+        $blocked = ((auth()->user()) ? auth()->user()->profile->blockers->contains($user) : false);
+        //dd($blocking);
         $users = $profile->followers()->pluck('user_id');
         $followers = User::whereIn("id", $users)->get();
 
         $users = $user->following->pluck('user_id');
         $followings = User::whereIn("id", $users)->get();
 
-        return view("profiles.show", compact("profile", "follows", "followers", "followings"));
+        return view("profiles.show", compact("profile", "followed", "blocking", "blocked", "followers", "followings"));
     }
 
     /**

@@ -82,30 +82,56 @@
                 <p class="bio">{{$profile->bio}}</p>
                 @if (!Auth::guest())
                     @if (Auth::user()->profile->id != $profile->id)
-                        {{-- <follow-button profile-id="{{$profile->id}}" follows="{{$follows}}"></follow-button> --}}
-                        <form method="POST" action="/follow/{{$profile->id}}">
-                            @csrf
-                            <button class="cr-btn w-25 mb-4" type="submit">
-                                @if ($follows)
-                                    unfollow
+                        @if (!$blocking and !$blocked)
+                            {{-- <follow-button profile-id="{{$profile->id}}" followed="{{$followed}}"></follow-button> --}}
+                            <form method="POST" action="/follow/{{$profile->id}}">
+                                @csrf
+                                <button class="cr-btn w-25 mb-4" type="submit">
+                                    @if ($followed)
+                                        unfollow
+                                    @else
+                                        follow
+                                    @endif
+                                </button>
+                            </form>
+                        @endif
+                    @endif
+                @endif
+                @if (!Auth::guest())
+                    @if (Auth::user()->profile->id != $profile->id)
+                        @if (!$blocked)
+                            <form method="POST" action="/block/{{$profile->id}}">
+                                @csrf
+                                @if ($blocking)
+                                    <button style="border-color: rgb(180, 0, 0) !important;" class="cr-btn w-25 mb-4" type="submit">
+                                        unblock
+                                    </button>
                                 @else
-                                    follow
+                                    <button class="cr-btn w-25 mb-4" type="submit">
+                                        block
+                                    </button>
                                 @endif
-                            </button>
-                        </form>
+                            </form>
+                        @else
+                            <h6 class="text-center">
+                                <strong>You are blocked from following &commat;{{$profile->user->username}}</strong>
+                            </h6>
+                        @endif
                     @endif
                 @endif
             </div>
             @if (!Auth::guest())
                 @if (Auth::user()->id != $profile->user_id)
-                    <div class="col-md-4 col-lg-6 mx-auto text-center">
-                        <form method="POST" action="/conversations">
-                            @csrf
-                            <input hidden name="profile_id" value="{{$profile->id}}">
-                            <button class="cr-btn w-50" type="submit">send message</button>
-                            </div>
-                        </form>
-                    </div>
+                    @if (!$blocking and !$blocked)
+                        <div class="col-md-4 col-lg-6 mx-auto text-center">
+                            <form method="POST" action="/conversations">
+                                @csrf
+                                <input hidden name="profile_id" value="{{$profile->id}}">
+                                <button class="cr-btn w-50" type="submit">send message</button>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 @endif
             @endif
             <div class="col-md-6 col-lg-6 item mx-auto text-center">

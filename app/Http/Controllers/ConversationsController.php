@@ -63,8 +63,14 @@ class ConversationsController extends Controller
             ->orderBy("created_at", "desc")
             ->get()
             ->except($excludedConversations);
-            
-        $users = User::all()->except(['id', auth()->user()->id]);
+        
+        // Removes the Auth user and any users that blocked or have been blocked by the Auth
+        $blocking = Auth()->user()->blocking->pluck('user_id');
+        $blocked = Auth()->user()->profile->blockers()->pluck('user_id');
+        $users = User::all()->except(auth()->user()->id)
+                            ->except($blocking->toArray())
+                            ->except($blocked->toArray());
+        // Ends here.
 
         return view("conversations.index", compact("conversations", "users"));
     }
@@ -167,7 +173,18 @@ class ConversationsController extends Controller
             }
         }
 
-        return view("conversations.show", compact("conversation", "messages"));
+        // Checks if one of the people in the conversation has the other person blocked
+        $blocked = false;
+        $user = User::find($conversation->user_id);
+        $profile = Profile::find($conversation->profile_id);
+        $user_blocked_profile = ($user->blocking->contains($profile));
+        $user_blocked_by_profile = ($profile->user->blocking->contains($user->profile));
+        //dd("user_blocked_profile: $user_blocked_profile, user_blocked_by_profile: $user_blocked_by_profile");
+        if($user_blocked_profile || $user_blocked_by_profile)
+            $blocked = true;
+        // Ends here.
+
+        return view("conversations.show", compact("conversation", "messages", "blocked"));
     }
 
     /**

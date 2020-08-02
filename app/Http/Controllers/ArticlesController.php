@@ -88,10 +88,27 @@ class ArticlesController extends Controller
     public function show(Article $article)
     {
         $article = Article::find($article->id);
-        $comments = $article->comments;
+        $all_comments = $article->comments;
         $likes = ((auth()->user()) ? auth()->user()->profile->liking->contains($article) : false);
         $users = $article->likes()->pluck('user_id');
         $likers = User::whereIn("id", $users)->get();
+
+        // Filters out the comments of people i blocked/blocked me
+        $comments = array();
+        foreach ($all_comments as $comment) {
+            $blocked = false;
+            $user = auth()->user();
+            $commentPoster = User::find($comment->user_id);
+            $user_blocked_commentPoster = ($user->blocking->contains($commentPoster->profile));
+            $user_blocked_by_commentPoster = ($user->profile->blockers->contains($commentPoster));
+            if(!$user_blocked_commentPoster && !$user_blocked_by_commentPoster)
+                array_push($comments, $comment);
+        }
+        $comments = collect($comments)->map(function ($comment) {
+            return (object) $comment;
+        });
+        // Comment filtering ends.
+
         return view("articles.show", compact("article", "comments", "likes", "likers"));
     }
 

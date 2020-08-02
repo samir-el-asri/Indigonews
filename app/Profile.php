@@ -41,6 +41,12 @@ class Profile extends Model
         return $this->belongsToMany('App\User')->withTimestamps();
     }
 
+    // User is blocked by many Profiles
+    public function blockers()
+    {
+        return $this->belongsToMany('App\User', 'profile_user_block_pivot')->withTimestamps();
+    }
+
     // Profiles likes many Articles
     public function liking()
     {

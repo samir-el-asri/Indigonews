@@ -13,6 +13,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Search\All_index;
+use App\Category;
+use App\Profile;
+use App\Article;
+use App\User;
 
 Route::get('/', "ArticlesController@index");
 
@@ -27,13 +31,13 @@ Route::resource('conversations', 'ConversationsController');
 Route::resource('messages', 'MessagesController');
 
 // Complete Profile Registration Page
-Route::get('profiles/{profile}/complete_registration', function (App\Profile $profile) {
+Route::get('profiles/{profile}/complete_registration', function (Profile $profile) {
     return view('profiles.complete_registration', compact("profile"));
 });
 
 // Pulls up category-specific articles only
-Route::get('categories/{category}', function (App\Category $category) {
-    $category = App\Category::find($category->id);
+Route::get('categories/{category}', function (Category $category) {
+    $category = Category::find($category->id);
     $articles = $category->articles;
     return view("articles.index", compact("articles"));
 });
@@ -42,10 +46,29 @@ Route::get('categories/{category}', function (App\Category $category) {
 Route::post('exclude/{conversation}', 'ExcludesController@store');
 
 // Handles the following/unfollowing of profiles by users
-Route::post('follow/{profile}', 'FollowsController@store');
+Route::post('follow/{profile}', function (Profile $profile){
+    auth()->user()->following()->toggle($profile);
+    return redirect('/profiles/'.$profile->id);
+});
+
+// Handles the blocking/unblocking of profiles by users
+Route::post('block/{profile}', function (Profile $profile) {
+
+    // Blocks the account
+    auth()->user()->blocking()->toggle($profile);
+    // Unfollows the blocked account
+    auth()->user()->following()->detach($profile);
+    // Gets unfollowed by the blocked account
+    (User::find($profile->user_id))->following()->detach(auth()->user()->profile);
+
+    return Redirect('/profiles/'.$profile->id)->with('success', "@".$profile->user->username." blocked.");
+});
 
 // Handles the liking/disliking of articles by profiles
-Route::post('like/{article}', 'LikesController@store');
+Route::post('like/{article}', function (Article $article) {
+    auth()->user()->profile->liking()->toggle($article);
+    return Redirect('/articles/'.$article->id);
+});
 
 // Handles the Laravel Scout Extended search
 Route::get('search', function (Request $request) {

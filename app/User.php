@@ -97,6 +97,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Profile')->withTimestamps();
     }
 
+    // User blocks many Profiles
+    public function blocking()
+    {
+        return $this->belongsToMany('App\Profile', 'profile_user_block_pivot')->withTimestamps();
+    }
+
     /**
      * Get the indexable data array for the model.
      *

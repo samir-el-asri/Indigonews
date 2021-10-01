@@ -5,13 +5,13 @@
                 <div class="col-sm-6 col-md-3 item">
                     <h3>Articles</h3>
                     <ul>
-                        <li><a href="/categories/2">Fashion</a></li>
-                        <li><a href="/categories/3">Science</a></li>
-                        <li><a href="/categories/4">Entertainment</a></li>
-                        <li><a href="/categories/5">Movies</a></li>
-                        <li><a href="/categories/6">Comics</a></li>
-                        <li><a href="/categories/7">Tech</a></li>
-                        <li><a href="/categories/8">Politics</a></li>
+                        <li><a href="/categories/0">Fashion</a></li>
+                        <li><a href="/categories/1">Science</a></li>
+                        <li><a href="/categories/2">Entertainment</a></li>
+                        <li><a href="/categories/3">Movies</a></li>
+                        <li><a href="/categories/4">Comics</a></li>
+                        <li><a href="/categories/5">Tech</a></li>
+                        <li><a href="/categories/6">Politics</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-6 col-md-3 item">

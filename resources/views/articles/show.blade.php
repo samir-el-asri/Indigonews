@@ -12,7 +12,7 @@
                             <span class="by">by&nbsp;</span>
                             <a href="/profiles/{{$article->user->profile->id}}">{{$article->user->profile->fullname}}</a>
                             <span class="date">{{$article->created_at}} </span>
-                            @if ($article->likes->count() > 0)
+                            @if ($article->likes->count() > 0 && !Auth::guest())
                                 {{-- Likes pop-up Bootstrap Modal --}}
                                 &nbsp;&nbsp;<button style="font-size: 13px; margin-bottom: 4px; text-transform: none;" type="button" class="date btn btn-link mx-auto" data-toggle="modal" data-target=".bd-example-modal-sm">{{$article->likes->count()}} likes</button>
                                 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

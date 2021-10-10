@@ -10,7 +10,7 @@
                 <p class="username">{{$profile->user->username}}</p>
 
                 {{-- Followers: --}}
-                @if ($profile->followers->count() > 0)
+                @if ($profile->followers->count() > 0 && !Auth::guest())
                     {{-- Followers pop-up Bootstrap Modal --}}
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target=".followers-modal">{{$profile->followers->count()}} Followers</button>
                     <div class="modal fade followers-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -45,7 +45,7 @@
                 @endif
 
                 {{-- Following: --}}
-                @if ($profile->user->following->count() > 0)
+                @if ($profile->user->following->count() > 0 && !Auth::guest())
                     {{-- Following pop-up Bootstrap Modal --}}
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target=".following-modal">Following {{$profile->user->following->count()}}</button>
                     <div class="modal fade following-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

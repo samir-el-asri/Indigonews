@@ -22,9 +22,11 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $users = auth()->user()->following->pluck('user_id');
-        $articles = Article::whereIn("user_id", $users)
-                            ->orWhereIn("user_id", [auth()->user()->id])
+        $followers = auth()->user()->profile->followers()->pluck('user_id');
+        $followings = auth()->user()->following->pluck('user_id');
+        $articles = Article::whereIn("user_id", [auth()->user()->id])
+                            ->orWhereIn("user_id", $followers)
+                            ->orWhereIn("user_id", $followings)
                             ->with("user")
                             ->latest()
                             ->get();
@@ -93,21 +95,25 @@ class ArticlesController extends Controller
         $users = $article->likes()->pluck('user_id');
         $likers = User::whereIn("id", $users)->get();
 
-        // Filters out the comments of people i blocked/blocked me
-        $comments = array();
-        foreach ($all_comments as $comment) {
-            $blocked = false;
-            $user = auth()->user();
-            $commentPoster = User::find($comment->user_id);
-            $user_blocked_commentPoster = ($user->blocking->contains($commentPoster->profile));
-            $user_blocked_by_commentPoster = ($user->profile->blockers->contains($commentPoster));
-            if(!$user_blocked_commentPoster && !$user_blocked_by_commentPoster)
-                array_push($comments, $comment);
+        if(Auth()->user()){
+            // Filters out the comments of people i blocked/blocked me (for authentificated users)
+            $comments = array();
+            foreach ($all_comments as $comment) {
+                $blocked = false;
+                $user = auth()->user();
+                $commentPoster = User::find($comment->user_id);
+                $user_blocked_commentPoster = ($user->blocking->contains($commentPoster->profile));
+                $user_blocked_by_commentPoster = ($user->profile->blockers->contains($commentPoster));
+                if(!$user_blocked_commentPoster && !$user_blocked_by_commentPoster)
+                    array_push($comments, $comment);
+            }
+            $comments = collect($comments)->map(function ($comment) {
+                return (object) $comment;
+            });
+            // Comment filtering ends.
         }
-        $comments = collect($comments)->map(function ($comment) {
-            return (object) $comment;
-        });
-        // Comment filtering ends.
+        else
+            $comments = $all_comments;
 
         return view("articles.show", compact("article", "comments", "likes", "likers"));
     }

@@ -64,12 +64,12 @@ class ConversationsController extends Controller
             ->get()
             ->except($excludedConversations);
         
-        // Removes the Auth user and any users that blocked or have been blocked by the Auth
-        $blocking = Auth()->user()->blocking->pluck('user_id');
-        $blocked = Auth()->user()->profile->blockers()->pluck('user_id');
-        $users = User::all()->except(auth()->user()->id)
-                            ->except($blocking->toArray())
-                            ->except($blocked->toArray());
+        // I should be able to select only the users that I'm following and the ones following me
+        // The ones that I blocked or blocked me will not be shown of course
+        $followers = Auth()->user()->profile->followers()->pluck('user_id');
+        $followings = Auth()->user()->following->pluck('user_id');
+        
+        $users = User::whereIn('id', $followers)->orWhereIn('id', $followings)->get();
         // Ends here.
 
         return view("conversations.index", compact("conversations", "users"));

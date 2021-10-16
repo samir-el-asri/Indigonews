@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\User;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Http\Helpers;
 
 class ArticlesController extends Controller
 {
@@ -15,6 +17,7 @@ class ArticlesController extends Controller
     {
         $this->middleware('auth', ['except'=>["show"]]);
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +59,8 @@ class ArticlesController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'content' => 'required',
-            'feature' => 'nullable|image|max:5999'
+            'feature' => 'nullable|image|max:5999',
+            'tags' => 'nullable'
         ]);
 
         if ($request->hasFile('feature')) {
@@ -77,6 +81,9 @@ class ArticlesController extends Controller
         $article->content = $request->input("content");
         $article->feature = $filenameToStore;
         $article->save();
+        
+        if($request->input("tags"))
+            handleTags($article, $request->input("tags"), false);
 
         return redirect('/articles')->with("success", "Article published succesfully!");
     }
@@ -130,7 +137,9 @@ class ArticlesController extends Controller
 
         $article = Article::find($article->id);
         $categories = Category::all();
-        return view("articles.edit", compact("article", "categories"));
+        $tags = implode(',', $article->tags()->get()->pluck('name')->toArray());
+
+        return view("articles.edit", compact("article", "categories", "tags"));
     }
 
     /**
@@ -149,6 +158,8 @@ class ArticlesController extends Controller
             'content' => 'required',
             'feature' => 'nullable|image|max:5999'
         ]);
+        
+        handleTags($article, $request->input("tags"), true);
 
         if ($request->hasFile('feature')) {
             if($article->feature != "noimage.jpg")
@@ -187,7 +198,12 @@ class ArticlesController extends Controller
 
         if($article->feature != "noimage.jpg")
             Storage::delete("public/features/".$article->feature);
+
+        if(!empty($article->tags))
+            $article->tags()->detach();
+        
         $article->delete();
+
         return redirect('/articles')->with("success", "Article deleted succesfully!");
     }
 }

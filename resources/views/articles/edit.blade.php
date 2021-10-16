@@ -28,6 +28,10 @@
             <label for="feature">Feature</label>
             <input type="file" class="form-control" name="feature">
         </div>
+        <div class="from-group mt-2">
+            <label for="tags">Tags</label>
+            <input type="text" class="form-control" name="tags" value="{{$tags}}">
+        </div>
         <div class="form-group mt-4">
             <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#articleEditModalCenter">update article</button>
             <div class="modal fade" id="articleEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="articleEditModalCenterTitle" aria-hidden="true">

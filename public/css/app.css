@@ -11473,7 +11473,7 @@ img.navbar-brand {
   line-height: 1.45;
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: dimgray;
 }
 
 @media (min-width: 768px) {
@@ -11513,6 +11513,13 @@ img.navbar-brand {
 
 table.modal-table td {
   text-align: center;
+}
+
+.a-tag {
+  padding: 10px 5px;
+  border: 2px solid dimgray;
+  background-color: lightgray;
+  border-radius: 100px;
 }
 
 .articles_home .feature {

@@ -23,6 +23,10 @@
             <label for="feature">Feature</label>
             <input type="file" class="form-control" name="feature">
         </div>
+        <div class="from-group mt-2">
+            <label for="tags">Tags</label>
+            <input type="text" class="form-control" name="tags" placeholder="tags seperated by comma">
+        </div>
         <div class="form-group mt-4">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

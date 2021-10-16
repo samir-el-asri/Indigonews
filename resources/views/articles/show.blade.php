@@ -51,6 +51,14 @@
                     <div class="text">
                         <p>{!!$article->content!!}</p>
                     </div>
+                    <div>
+                        @if ($article->tags->count() > 0)
+                            Tags:&nbsp;
+                            @foreach ($article->tags as $tag)
+                                <a href="/tags/{{$tag->id}}" class="pr-2 a-tag">{{$tag->name}}</a>
+                            @endforeach
+                        @endif
+                    </div>
                     <p class="text-center">Categorty: <a href="/categories/{{$article->category_id}}">{{$article->category->name}}</a></p>
                     
                     @if (!Auth::guest())

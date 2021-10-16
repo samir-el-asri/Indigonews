@@ -42,6 +42,12 @@ class Article extends Model
         return $this->belongsToMany('App\Profile')->withTimestamps();
     }
 
+    // Article has many Tags
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
     // Overriding the toSearchableArray method to index relationships between 'Article' and 'User'.
     public function toSearchableArray()
     {

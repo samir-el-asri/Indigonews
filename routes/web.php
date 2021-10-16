@@ -17,6 +17,7 @@ use App\Category;
 use App\Profile;
 use App\Article;
 use App\User;
+use App\Tag;
 
 Route::get('/', "ArticlesController@index");
 
@@ -39,6 +40,13 @@ Route::get('profiles/{profile}/complete_registration', function (Profile $profil
 Route::get('categories/{category}', function (Category $category) {
     $category = Category::find($category->id);
     $articles = $category->articles;
+    return view("articles.index", compact("articles"));
+});
+
+// Pulls up tag-specific articles only
+Route::get('tags/{tag}', function (Tag $tag) {
+    $tag = Tag::find($tag->id);
+    $articles = $tag->articles()->get();
     return view("articles.index", compact("articles"));
 });
 

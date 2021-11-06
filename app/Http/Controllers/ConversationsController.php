@@ -72,6 +72,11 @@ class ConversationsController extends Controller
         $users = User::whereIn('id', $followers)->orWhereIn('id', $followings)->get();
         // Ends here.
 
+        // Mark all new message Notifications as read
+        auth()->user()->unreadNotifications
+            ->where('type', "App\Notifications\NewConversationUserMessage")
+            ->markAsRead();
+
         return view("conversations.index", compact("conversations", "users"));
     }
 

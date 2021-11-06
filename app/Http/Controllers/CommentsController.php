@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comment;
+use App\Article;
+use App\Notifications\NewArticleUserComment;
+use DB;
 
 class CommentsController extends Controller
 {
@@ -45,6 +48,9 @@ class CommentsController extends Controller
         $comment->user_id = auth()->user()->id;
         $comment->article_id = $request->input('article_id');
         $comment->save();
+        
+        if($comment->article->user->id != auth()->user()->id)
+            $comment->article->user->notify(new NewArticleUserComment(auth()->user()->id, "/articles/".$comment->article->id, $comment->id));
 
         return redirect('/articles/'.$comment->article_id)->with("success", "Comment posted succesfully!");
     }
@@ -93,6 +99,18 @@ class CommentsController extends Controller
     {
         $comment = Comment::find($id);
         $article_id = $comment->article_id;
+        
+        // This will delete the notification affiliated with this comment as well whether it was read or unread.
+        $commentNotifications = DB::table('notifications')->select('id', 'data')->where(['type' => "App\Notifications\NewArticleUserComment"])->get();
+        foreach($commentNotifications as $notification){
+            $commentId = intval(explode(':', (explode(',', $notification->data))[2])[1]);
+            if($commentId == $comment->id){
+                DB::table('notifications')
+                    ->where('id', $notification->id)
+                    ->delete();
+            }
+        }
+
         $comment->delete();
 
         return Redirect("/articles/".$article_id)->with("success", "Comment deleted successfully!");

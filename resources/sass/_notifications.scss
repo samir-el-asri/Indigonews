@@ -1,0 +1,31 @@
+.user-pic{
+    width: 40px;
+    height: 40px; 
+}
+
+a{
+    color: teal;
+    font-weight: bold;
+}
+
+a:hover{
+    color: rgb(0, 80, 80);
+}
+
+.notification{
+    border: 2px solid lightgray;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 8px 0px;
+    background-color: whitesmoke;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.notifications{
+    width: 50%;
+}
+
+.notifications .btn{
+    margin-bottom: 20px;
+}

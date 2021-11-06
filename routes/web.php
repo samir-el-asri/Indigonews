@@ -18,6 +18,8 @@ use App\Profile;
 use App\Article;
 use App\User;
 use App\Tag;
+use App\Notifications\NewUserFollower;
+use App\Notifications\NewArticleProfileLike;
 
 Route::get('/', "ArticlesController@index");
 
@@ -36,6 +38,9 @@ Route::get('profiles/{profile}/complete_registration', function (Profile $profil
     return view('profiles.complete_registration', compact("profile"));
 });
 
+// Handles the routing of the 'notifications' controller function & view
+Route::get('profiles/{profile}/notifications', 'NotificationsController@notify');
+
 // Pulls up category-specific articles only
 Route::get('categories/{category}', function (Category $category) {
     $category = Category::find($category->id);
@@ -53,9 +58,17 @@ Route::get('tags/{tag}', function (Tag $tag) {
 // Handles the deletion (excluding) of conversations
 Route::post('exclude/{conversation}', 'ExcludesController@store');
 
-// Handles the following/unfollowing of profiles by users
+// Handles the following/unfollowing of profiles by users + notification
 Route::post('follow/{profile}', function (Profile $profile){
     auth()->user()->following()->toggle($profile);
+    
+    // Will notify only if the toggle was an attach
+    if(auth()->user()->following()->where("profile_id", $profile->id)->exists()){
+        $followedBack = $profile->user->following()->where("profile_id", auth()->user()->profile->id)->exists();
+        $url = "/profiles/".auth()->user()->profile->id;
+        $profile->user->notify(new NewUserFollower(auth()->user()->id, $url, $followedBack));
+    }
+
     return redirect('/profiles/'.$profile->id);
 });
 
@@ -72,9 +85,15 @@ Route::post('block/{profile}', function (Profile $profile) {
     return Redirect('/profiles/'.$profile->id)->with('success', "@".$profile->user->username." blocked.");
 });
 
-// Handles the liking/disliking of articles by profiles
+// Handles the liking/disliking of articles by profiles + notification
 Route::post('like/{article}', function (Article $article) {
     auth()->user()->profile->liking()->toggle($article);
+
+    // Will notify only if the toggle was an attach
+    if(auth()->user()->profile->liking()->where("article_id", $article->id)->exists() && $article->user_id != auth()->user()->id){
+        $article->user->notify(new NewArticleProfileLike(auth()->user()->id, "/articles/".$article->id));
+    }
+
     return Redirect('/articles/'.$article->id);
 });
 

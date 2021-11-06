@@ -11106,6 +11106,13 @@ img.navbar-brand {
   padding: 4px 20px;
 }
 
+span#notificationsCount {
+  vertical-align: bottom;
+  margin-left: -3px;
+  color: teal;
+  text-shadow: 2px 2px 10px #b1b1b1;
+}
+
 .footer-dark {
   padding: 50px 0;
   color: #f0f9ff;
@@ -11915,5 +11922,37 @@ a:hover {
 .pu-username {
   font-size: 16px !important;
   padding-top: 22px !important;
+}
+
+.user-pic {
+  width: 40px;
+  height: 40px;
+}
+
+a {
+  color: teal;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #005050;
+}
+
+.notification {
+  border: 2px solid lightgray;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 8px 0px;
+  background-color: whitesmoke;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.notifications {
+  width: 50%;
+}
+
+.notifications .btn {
+  margin-bottom: 20px;
 }
 

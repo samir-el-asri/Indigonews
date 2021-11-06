@@ -9,6 +9,7 @@ use App\User;
 use App\Profile;
 use DB;
 use Storage;
+use App\Notifications\NewConversationUserMessage;
 
 class MessagesController extends Controller
 {
@@ -96,6 +97,13 @@ class MessagesController extends Controller
         $message->message = $request->input("message");
         $message->read = false;
         $message->save();
+
+        // Notifies the other person in the conversation about a new message
+        if($conversation->profile_id == auth()->user()->profile->id)
+            $user = User::find($conversation->user_id);
+        else
+            $user = User::find(Profile::find($conversation->profile_id)->user->id);
+        $user->notify(new NewConversationUserMessage(auth()->user()->id, $conversation_id));
 
         // If the request contains an image file, it will be assign to the newly created message
         if ($request->hasFile('photo')) {

@@ -25,6 +25,30 @@
                     <input required class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-light action-button my-2 my-sm-0" type="submit">Search</button>
                 </form>
+
+                @if (!Auth::guest())
+                    {{-- Notifiations --}}
+                    <a class="ml-auto" href="/profiles/{{Auth::user()->profile->id}}/notifications">
+                        <img src="/storage/img/notification.png" width="27px">
+                        @php
+                            $i = 0;
+                        @endphp
+                        @foreach (Auth::user()->unreadNotifications as $notification)
+                            @if ($notification->type != "App\Notifications\NewConversationUserMessage")
+                                @php
+                                    $i++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        <span id="notificationsCount">
+                            <b>
+                                @php
+                                    echo $i;
+                                @endphp
+                            </b>
+                        </span>
+                    </a>
+                @endif
     
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -46,7 +70,27 @@
     
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/profiles/{{Auth::user()->profile->id}}">Profile</a>
-                                <a class="dropdown-item" href="/conversations">Inbox</a>
+                                <a class="dropdown-item" href="/conversations">
+                                    Inbox
+                                    @php
+                                        $a = array();
+                                    @endphp
+                                    @foreach (Auth::user()->unreadNotifications as $notification)
+                                        @if ($notification->type == "App\Notifications\NewConversationUserMessage")
+                                            @php
+                                                if(!in_array($notification->data["conversationId"], $a))
+                                                    $a[] = $notification->data["conversationId"];
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                    <span id="notificationsCount" class="pl-2 pt-2">
+                                        <b>
+                                            @php
+                                                echo count($a);
+                                            @endphp
+                                        </b>
+                                    </span>
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">

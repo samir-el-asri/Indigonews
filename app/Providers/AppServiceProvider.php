@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
         //Schema::defaultStringLength(255);
         Builder::defaultStringLength(191);
         // Update defaultStringLength
-        All_index::bootSearchable();
+        all_index::bootSearchable();
     }
 }

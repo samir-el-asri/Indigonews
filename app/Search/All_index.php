@@ -7,7 +7,7 @@ use App\Article;
 use App\Profile;
 use App\User;
 
-class all_index extends Aggregator
+class All_index extends Aggregator
 {
     /**
      * The names of the models that should be aggregated.
